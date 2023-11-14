@@ -2,8 +2,8 @@ package user
 
 import (
 	v1 "baseframe/api/goserver/v1"
+	"baseframe/pkg/log"
 	"context"
-	log "github.com/golang/glog"
 	"gorm.io/gorm"
 	"time"
 )

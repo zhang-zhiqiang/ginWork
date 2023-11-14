@@ -2,8 +2,8 @@ package data
 
 import (
 	"baseframe/internal/goserver/service/user"
+	"baseframe/pkg/log"
 	"context"
-	log "github.com/golang/glog"
 )
 
 type UserData struct {

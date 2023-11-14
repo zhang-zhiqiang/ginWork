@@ -4,9 +4,10 @@
 //go:build !wireinject
 // +build !wireinject
 
-package goserver
+package main
 
 import (
+	"baseframe/internal/goserver"
 	"baseframe/internal/goserver/conf"
 	user2 "baseframe/internal/goserver/controller/v1/user"
 	"baseframe/internal/goserver/data"
@@ -21,6 +22,6 @@ func loadServer(c *conf.Config) *gin.Engine {
 	userRepo := data.NewUserData(dataData)
 	userService := user.NewUserService(userRepo)
 	userController := user2.NewUserController(userService)
-	engine := NewHttpServer(userController)
+	engine := goserver.NewHttpServer(userController)
 	return engine
 }

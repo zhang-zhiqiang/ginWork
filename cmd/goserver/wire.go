@@ -1,9 +1,10 @@
 //go:build wireinject
 // +build wireinject
 
-package goserver
+package main
 
 import (
+	"baseframe/internal/goserver"
 	"baseframe/internal/goserver/conf"
 	v1 "baseframe/internal/goserver/controller/v1"
 	"baseframe/internal/goserver/data"
@@ -13,5 +14,5 @@ import (
 )
 
 func loadServer(c *conf.Config) *gin.Engine {
-	panic(wire.Build(data.ProviderSet, service.ProviderSet, v1.ProviderSet, ProviderSet))
+	panic(wire.Build(data.ProviderSet, service.ProviderSet, v1.ProviderSet, goserver.ProviderSet))
 }

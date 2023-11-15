@@ -2,8 +2,9 @@ package user
 
 import (
 	v1 "baseframe/api/goserver/v1"
+	"baseframe/internal/pkg/code"
+	"baseframe/pkg/core"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func (uc *UserController) Create(c *gin.Context) {
@@ -11,20 +12,14 @@ func (uc *UserController) Create(c *gin.Context) {
 	var req *v1.CreateUserReq
 
 	if err := c.ShouldBindJSON(req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"msg": "bind error",
-		})
+		core.WriteResponse(c, code.ErrBind, nil)
 		return
 	}
 
 	if err := uc.us.CreateUser(c, req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"msg": "创建失败",
-		})
+		core.WriteResponse(c, code.ErrSuccess, nil)
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"message": "success",
-	})
+	core.WriteResponse(c, code.ErrSuccess, nil)
 }

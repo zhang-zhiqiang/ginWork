@@ -20,26 +20,24 @@ const (
 	defaultConfigName = "goserver.yaml"
 )
 
-var Config *conf.Config
-
 func main() {
 	config.LoadConfig("", defaultConfigName)
 
-	Config = &conf.Config{}
-	if err := viper.Unmarshal(Config); err != nil {
+	options := &conf.Config{}
+	if err := viper.Unmarshal(options); err != nil {
 		panic("配置文件映射异常")
 	}
 
-	log.Init(Config.Log)
-	log.Info(Config.Server.Addr)
+	log.Init(options.Log)
+	log.Info(options.Server.Addr)
 
-	g := loadServer(Config)
+	g := loadServer(options)
 
 	// set gin mode
-	gin.SetMode(Config.Server.Mode)
+	gin.SetMode(options.Server.Mode)
 
 	insecureServer := &http.Server{
-		Addr:    fmt.Sprintf(":%s", Config.Server.Addr),
+		Addr:    fmt.Sprintf(":%s", options.Server.Addr),
 		Handler: g,
 	}
 

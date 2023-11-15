@@ -21,6 +21,8 @@ func WriteResponse(c *gin.Context, code int, data interface{}) {
 			Message: coder.Message(),
 			Data:    data,
 		})
+
+		return
 	}
 
 	c.JSON(http.StatusOK, Response{Data: data})

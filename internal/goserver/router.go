@@ -14,12 +14,12 @@ func NewHttpServer(uc *user.UserController) *gin.Engine {
 	g := gin.New()
 	g.GET("/ping", func(c *gin.Context) {
 		data := &gin.H{"message": "pong"}
-		core.WriteResponse(c, code.ErrSuccess, data)
+		core.Response(c, code.ErrSuccess, data)
 	})
 
 	users := g.Group("/users")
 	{
-		users.GET("create", uc.Create)
+		users.POST("register", uc.Create)
 	}
 	return g
 }

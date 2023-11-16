@@ -41,6 +41,17 @@ func (coder DefaultCoder) Message() string {
 var codes = map[int]Coder{}
 var codeMux = &sync.Mutex{}
 
+func Register(coder Coder) {
+	if coder.Code() == 0 {
+		panic(fmt.Sprintf("错误码不能为0 %s", coder.Message()))
+	}
+
+	codeMux.Lock()
+	defer codeMux.Unlock()
+
+	codes[coder.Code()] = coder
+}
+
 func MustRegister(coder Coder) {
 	if coder.Code() == 0 {
 		panic(fmt.Sprintf("错误码不能为0 %s", coder.Message()))

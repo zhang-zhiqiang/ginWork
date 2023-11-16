@@ -5,18 +5,17 @@ import (
 	"net/http"
 )
 
-type Response struct {
-	Code      int         `json:"code,omitempty"`
-	Message   string      `json:"message,omitempty"`
-	Reference string      `json:"reference,omitempty"`
-	Data      interface{} `json:"data,omitempty"`
+type ErrResponse struct {
+	Code    int         `json:"code,omitempty"`
+	Message string      `json:"message,omitempty"`
+	Data    interface{} `json:"data,omitempty"`
 }
 
-func WriteResponse(c *gin.Context, code int, data interface{}) {
+func Response(c *gin.Context, code int, data interface{}) {
 	if code != 0 {
 		coder := GetCoder(code)
 
-		c.JSON(coder.HttpStatus(), Response{
+		c.JSON(coder.HttpStatus(), ErrResponse{
 			Code:    coder.Code(),
 			Message: coder.Message(),
 			Data:    data,
@@ -25,5 +24,21 @@ func WriteResponse(c *gin.Context, code int, data interface{}) {
 		return
 	}
 
-	c.JSON(http.StatusOK, Response{Data: data})
+	c.JSON(http.StatusOK, ErrResponse{Data: data})
+}
+
+func WithMsgResponse(c *gin.Context, code int, message string, data interface{}) {
+	if code != 0 {
+		coder := GetCoder(code)
+
+		c.JSON(coder.HttpStatus(), ErrResponse{
+			Code:    coder.Code(),
+			Message: message,
+			Data:    data,
+		})
+
+		return
+	}
+
+	c.JSON(http.StatusOK, ErrResponse{Data: data})
 }

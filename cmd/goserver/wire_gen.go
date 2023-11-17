@@ -11,16 +11,16 @@ import (
 	"baseframe/internal/goserver/conf"
 	user2 "baseframe/internal/goserver/controller/v1/user"
 	"baseframe/internal/goserver/data"
-	"baseframe/internal/goserver/service/user"
+	"baseframe/internal/goserver/service/v1"
 	"github.com/gin-gonic/gin"
 )
 
 // Injectors from wire.go:
 
 func loadServer(c *conf.Config) *gin.Engine {
-	dataData := data.NewData(c)
-	userRepo := data.NewUserData(dataData)
-	userService := user.NewUserService(userRepo)
+	db := data.NewData(c)
+	userRepo := data.NewUserData(db)
+	userService := v1.NewUserService(userRepo)
 	userController := user2.NewUserController(userService)
 	engine := goserver.NewHttpServer(userController)
 	return engine

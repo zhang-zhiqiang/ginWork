@@ -1,20 +1,19 @@
 package data
 
 import (
-	"baseframe/internal/goserver/service/user"
-	"baseframe/pkg/log"
+	"baseframe/internal/goserver/service/v1"
 	"context"
+	"gorm.io/gorm"
 )
 
 type UserData struct {
-	data *Data
+	db *gorm.DB
 }
 
-func NewUserData(data *Data) user.UserRepo {
-	return &UserData{data: data}
+func NewUserData(db *gorm.DB) v1.UserRepo {
+	return &UserData{db: db}
 }
 
-func (ud *UserData) Create(ctx context.Context, u *user.UserModel) error {
-	log.Info("user data")
-	return nil
+func (ud *UserData) Create(ctx context.Context, user *v1.UserModel) error {
+	return ud.db.Create(&user).Error
 }

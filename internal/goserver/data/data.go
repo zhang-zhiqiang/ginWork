@@ -14,10 +14,10 @@ type Data struct {
 var ProviderSet = wire.NewSet(NewData, NewUserData)
 
 // NewData .
-func NewData(c *conf.Config) *Data {
+func NewData(c *conf.Config) *gorm.DB {
 	db, err := db.New(c.Mysql)
 	if err != nil {
 		panic("数据库连接失败")
 	}
-	return &Data{db: db}
+	return db
 }

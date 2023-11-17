@@ -1,6 +1,8 @@
 package core
 
 import (
+	"baseframe/pkg/errors"
+	"baseframe/pkg/log"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -11,34 +13,29 @@ type ErrResponse struct {
 	Data    interface{} `json:"data,omitempty"`
 }
 
-func Response(c *gin.Context, code int, data interface{}) {
-	if code != 0 {
-		coder := GetCoder(code)
+var codeSuccess = 100000
 
-		c.JSON(coder.HttpStatus(), ErrResponse{
-			Code:    coder.Code(),
-			Message: coder.Message(),
-			Data:    data,
-		})
-
-		return
+func success(data interface{}) ErrResponse {
+	return ErrResponse{
+		Code:    codeSuccess,
+		Message: "ok",
+		Data:    data,
 	}
-
-	c.JSON(http.StatusOK, ErrResponse{Data: data})
 }
 
-func WithMsgResponse(c *gin.Context, code int, message string, data interface{}) {
-	if code != 0 {
-		coder := GetCoder(code)
+func Response(c *gin.Context, err error, data interface{}) {
+	if err != nil {
+		log.Errorf("错误信息： %#+v", err)
+		coder := errors.ParseCoder(err)
 
-		c.JSON(coder.HttpStatus(), ErrResponse{
+		c.JSON(coder.HTTPStatus(), ErrResponse{
 			Code:    coder.Code(),
-			Message: message,
+			Message: coder.String(),
 			Data:    data,
 		})
 
 		return
 	}
 
-	c.JSON(http.StatusOK, ErrResponse{Data: data})
+	c.JSON(http.StatusOK, success(data))
 }

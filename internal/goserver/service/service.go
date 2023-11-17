@@ -1,8 +1,8 @@
 package service
 
 import (
-	"baseframe/internal/goserver/service/user"
+	"baseframe/internal/goserver/service/v1"
 	"github.com/google/wire"
 )
 
-var ProviderSet = wire.NewSet(user.NewUserService)
+var ProviderSet = wire.NewSet(v1.NewUserService)

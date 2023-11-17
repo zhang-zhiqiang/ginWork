@@ -1,11 +1,13 @@
 package user
 
-import "baseframe/internal/goserver/service/user"
+import (
+	"baseframe/internal/goserver/service/v1"
+)
 
 type UserController struct {
-	us *user.UserService
+	us *v1.UserService
 }
 
-func NewUserController(us *user.UserService) *UserController {
+func NewUserController(us *v1.UserService) *UserController {
 	return &UserController{us}
 }

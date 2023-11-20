@@ -8,3 +8,13 @@ type CreateUserReq struct {
 	Phone    string `validate:"required,phone" label:"手机号"`
 	Status   int    `validate:"omitempty" label:"状态"`
 }
+
+type LoginReq struct {
+	Username string `json:"username" validate:"required,min=1,max=128" label:"用户名"`
+	Password string `json:"password" validate:"required,min=1,max=16" label:"密码"`
+}
+
+type LoginRep struct {
+	Token  string
+	Expire string
+}

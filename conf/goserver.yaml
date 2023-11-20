@@ -22,3 +22,9 @@ log:
   format: console # console, json
   output-paths: [/Users/zzq/Project/go/baseframe/tmp/goserver.log, stdout] # 多个输出，用 `逗号+空格` 分开。stdout：标准输出，
   error-output-paths: [stderr] # zap内部(非业务)错误日志输出路径，多个输出，逗号分开
+
+jwt:
+  realm: JWT
+  key: 4ZFLRh7CpRMY8gkdmkGdOaO8yY6X1s5P
+  timeout: 72h
+  max-refresh: 72h

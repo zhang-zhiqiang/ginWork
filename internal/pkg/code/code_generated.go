@@ -14,4 +14,7 @@ func init() {
 	register(ErrValidation, 400, "校验失败")
 	register(ErrTokenInvalid, 401, "令牌无效")
 	register(ErrPageNotFound, 404, "Page not found")
+	register(ErrDatabase, 500, "Database error")
+	register(ErrUserNotFound, 404, "用户不存在")
+	register(ErrLoginFailed, 401, "登陆失败")
 }

@@ -18,3 +18,9 @@ func NewUserData(db *gorm.DB) v1.UserRepo {
 func (ud *UserData) Create(ctx context.Context, user *models.UserModel) error {
 	return ud.db.Create(&user).Error
 }
+
+func (ud *UserData) GetByUserName(ctx context.Context, username string) (*models.UserModel, error) {
+	user := &models.UserModel{}
+	err := ud.db.Where("username = ? and status = ?", username, models.UserStatusNormal).First(&user).Error
+	return user, err
+}

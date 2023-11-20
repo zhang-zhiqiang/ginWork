@@ -5,4 +5,4 @@ import (
 	"github.com/google/wire"
 )
 
-var ProviderSet = wire.NewSet(user.NewUserController)
+var ProviderSet = wire.NewSet(user.NewUserController, user.NewJwtAuth)

@@ -19,3 +19,8 @@ const (
 	// ErrPageNotFound - 404: Page not found.
 	ErrPageNotFound
 )
+
+const (
+	// ErrDatabase - 500: Database error.
+	ErrDatabase int = iota + 100101
+)

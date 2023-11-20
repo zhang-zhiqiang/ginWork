@@ -3,6 +3,7 @@ package models
 import (
 	"baseframe/pkg/log"
 	"baseframe/pkg/utils"
+	"fmt"
 	"gorm.io/gorm"
 	"time"
 )
@@ -44,5 +45,12 @@ func (u *UserModel) BeforeCreate(_ *gorm.DB) error {
 		return err
 	}
 	u.Password = hashedPwd
+	return nil
+}
+
+func (u *UserModel) Compare(pwd string) error {
+	if err := utils.Compare(u.Password, pwd); err != nil {
+		return fmt.Errorf("密码错误")
+	}
 	return nil
 }
